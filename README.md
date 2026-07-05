@@ -70,10 +70,19 @@ instead of a simple lookup tool.
 | Concept | Where |
 |---|---|
 | Multi-agent system (ADK) | `athlete_concierge/agent.py` orchestrates `training_agent` + `academic_agent` |
-| MCP Server | `mcp_server/server.py`, a from-scratch FastMCP server with 3 tools |
+| MCP Server | `mcp_server/server.py`, a from-scratch FastMCP server with multiple tools |
 | Security features | API key lives only in `.env` (gitignored); MCP server hardcodes its data paths rather than accepting arbitrary paths from the caller; soreness input is validated/clamped to 1-5 |
 | Deployability | See "Deploying" below |
-| Agent skills / CLI | Run and demoed via `adk run` / `adk web` |
+| Agent skills / CLI | Run and demoed via ADK CLI  `adk web` |
+
+## More about the MCP Server Tools
+
+| Category | Tools |
+|---|---|
+| Training & Recovery Tools | `get_todays_workout`, `adjust_todays_workouts` (reduces intensity when soreness is high), `log_soreness`, `recent_soreness_for` |
+| Strength Tracking Tools | `set_one_rep_max`, `get_one_rep_maxes` |
+| State Management Tools | `load_json`, `save_json` |
+| Utility Tools | `_round_to_nearest` (rounds weights to plate-friendly increments) |
 
 ## Setup
 
@@ -110,7 +119,7 @@ Try asking:
 - "My legs are really sore, like a 4 out of 5."
 - "Help me plan my week."
 
-## Security notes
+## Basic security notes
 
 - No API keys or credentials are hardcoded anywhere in this repo -- the only
   secret (`GOOGLE_API_KEY`) lives in a local `.env` file that is excluded via
@@ -123,15 +132,7 @@ Try asking:
 
 ## Deploying
 
-This project runs locally via `adk web` / `adk run` for development. To take
-it further, ADK agents can be containerized and deployed to **Cloud Run** (or
-Vertex AI Agent Engine): package the agent with a small FastAPI wrapper,
-build a container image, and deploy with `gcloud run deploy`. The MCP server
-would either run as a sidecar process or be swapped for an HTTP/SSE-based
-MCP connection (`SseServerParams`) instead of stdio, since Cloud Run
-services don't share a local filesystem process the way stdio expects. This
-project doesn't deploy live for judging purposes, per the course rubric.
-
+“This project runs locally using ADK (adk web / adk run). It is designed to be deployable to Cloud Run by containerizing the agent and replacing stdio MCP with an HTTP-based transport.”
 ## Built with
 
 This project was built and tested in Google's **Antigravity** IDE as part of
