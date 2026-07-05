@@ -32,8 +32,8 @@ instead of a simple lookup tool.
                      │   (root/orchestrator)    │
                      └────────────┬─────────────┘
                                   │ delegates based on intent
-              ┌───────────────────┴───────────────────┐
-              ▼                                        ▼
+              ┌───────────────────┴───────────────────────┐
+              ▼                                           ▼
     ┌──────────────────────┐                   ┌────────────────────┐
     │  training_agent      │                   │  academic_agent    │
     │  (workouts, soreness)│                   │ (deadlines, study) │
